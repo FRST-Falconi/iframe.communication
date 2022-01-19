@@ -2,5 +2,9 @@
   "private": true,
   "name": "iframe-communication",
   "version": "0.0.2",
-  "main": "./index.js"
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
 }
