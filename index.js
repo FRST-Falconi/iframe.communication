@@ -3,10 +3,12 @@
 /**
  * @param {Array.<string>} childDomains           Array of permited domains.
  */
-exports.setupParentListener = (childDomains) => {
+exports.setupParentListener = (childDomains, debug = false) => {
+  if (debug) console.log("Setting up Parent Listener");
+
   window.addEventListener(
     "message",
-    (e) => _parentMessageHandler(e, childDomains),
+    (e) => _parentMessageHandler(e, childDomains, debug),
     false
   );
 };
@@ -15,10 +17,12 @@ exports.setupParentListener = (childDomains) => {
  * @param {string} key           Key of the desired data you want to retrieve from parent
  * @param {Function} callback    Callback function to handle/save data
  */
-exports.getDataFromParent = (key, callback) => {
+exports.getDataFromParent = (key, callback, debug = false) => {
+  if (debug) console.log(`Asking parent for key ${key} `);
+
   window.addEventListener(
     "message",
-    (e) => _childMessageHandler(e, callback),
+    (e) => _childMessageHandler(e, callback, debug),
     false
   );
 
@@ -26,7 +30,8 @@ exports.getDataFromParent = (key, callback) => {
 };
 
 // Private methods
-function _childMessageHandler(event, callback) {
+function _childMessageHandler(event, callback, debug) {
+  if (debug) console.log("received event in children", event);
   const { action, data } = event.data;
   if (action === "returnData") {
     callback(data);
@@ -34,7 +39,9 @@ function _childMessageHandler(event, callback) {
   }
 }
 
-function _parentMessageHandler(event, domains) {
+function _parentMessageHandler(event, domains, debug) {
+  if (debug) console.log("received event in parent", event);
+
   if (!domains.includes(event.origin)) return;
 
   const { action, key, value } = event.data;
