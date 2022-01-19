@@ -3,7 +3,6 @@
  * @param {Array.<string>} childDomains           Array of permited domains.
  */
 exports.setupParentListener = function (childDomains) {
-    console.log('calling setup parent');
     window.addEventListener("message", function (e) { return _parentMessageHandler(e, childDomains); }, false);
 };
 /**
@@ -23,7 +22,6 @@ function _childMessageHandler(event, callback) {
     }
 }
 function _parentMessageHandler(event, domains) {
-    console.log('parent message received');
     if (!domains.includes(event.origin))
         return;
     var _a = event.data, action = _a.action, key = _a.key, value = _a.value;

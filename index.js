@@ -4,7 +4,6 @@
  * @param {Array.<string>} childDomains           Array of permited domains.
  */
 exports.setupParentListener = (childDomains) => {
-  console.log('calling setup parent')
   window.addEventListener(
     "message",
     (e) => _parentMessageHandler(e, childDomains),
@@ -36,7 +35,6 @@ function _childMessageHandler(event, callback) {
 }
 
 function _parentMessageHandler(event, domains) {
-  console.log('parent message received')
   if (!domains.includes(event.origin)) return;
 
   const { action, key, value } = event.data;
