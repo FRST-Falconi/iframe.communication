@@ -19,6 +19,16 @@ exports.getDataFromParent = function (key, callback, debug) {
     window.addEventListener("message", function (e) { return _childMessageHandler(e, callback, debug); }, false);
     window.parent.postMessage({ action: "get", key: key }, "*");
 };
+/**
+ * @param {string} key           Key of the desired data you want to retrieve from parent
+ * @param {Object} value         Value that must be updated on parent
+ */
+exports.updateDataFromChildren = function (key, value, debug) {
+    if (debug === void 0) { debug = false; }
+    if (debug)
+        console.log("Updating parent key ".concat(key, " "));
+    window.parent.postMessage({ action: "update", key: key, value: value }, "*");
+};
 // Private methods
 function _childMessageHandler(event, callback, debug) {
     if (debug)
@@ -37,7 +47,6 @@ function _parentMessageHandler(event, domains, debug) {
     var _a = event.data, action = _a.action, key = _a.key, value = _a.value;
     switch (action) {
         case "update":
-            // Just in case child needs to update parent
             window.localStorage.setItem(key, JSON.stringify(value));
             break;
         case "get":
