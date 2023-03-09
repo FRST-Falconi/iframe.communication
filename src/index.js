@@ -15,7 +15,7 @@ exports.setupParentListener = (childDomains, debug = false) => {
 
 /**
  * @param {string || Array.<string>} key Key of the desired data you want to retrieve from parent
- * @param {Function || Array.<function>} callback    Callback function to handle/save data
+ * @param {Function} callback    Callback function to handle/save data
  */
 exports.getDataFromParent = (key, callback, debug = false) => {
   if (debug) console.log(`Asking parent for key ${key} `)
