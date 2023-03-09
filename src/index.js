@@ -26,7 +26,7 @@ exports.getDataFromParent = (key, callback, debug = false) => {
     false
   )
 
-  window.parent.postMessage({ action: 'get', key: key }, '')
+  window.parent.postMessage({ action: 'get', key: key }, '*')
 }
 
 /**
